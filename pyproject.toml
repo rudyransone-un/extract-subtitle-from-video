@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "extract-subtitle-from-video"
+version = "0.1.0"
+description = ""
+authors = ["rudyransone-un <rudyransone@gmail.com>"]
+readme = "README.md"
+packages = [{include = "extract_subtitle_from_video"}]
+
+[virtualenvs]
+in-project = true
+
+[tool.poetry.dependencies]
+python = "^3.8"
+youtube-dl = "^2021.12.17"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
