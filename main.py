@@ -1,22 +1,35 @@
-import json
-
 import youtube_dl
 
 
-def _dict_to_json(data):
-    return json.dumps(data, indent=4, ensure_ascii=False)
+# youtube-dl --write-auto-sub --write-sub --sub-lang en --sub-format srv3 --convert-subs=srt --skip-download "https://www.youtube.com/watch?v=1LV1K69885E" -o ./downloads/subs
+
+YT_URL = 'https://www.youtube.com/watch?v=1LV1K69885E'
+YTDL_OPTS = {
+    'outtmpl': './downloads/%(channel_id)s_%(id)s.%(ext)s',
+    'writeautomaticsub': True,
+    'writesubtitles': True,
+    # 'subtitleslangs': ['en'],
+    # 'subtitlesformat': 'srv3',
+    'skip_download': True
+}
 
 
-def save_to_json(filename, data):
-    with open(f'{filename}.json', 'w') as file:
-        file.write(_dict_to_json(data))
+def extract_subtitle(
+    url: str, sub_lang: str = 'en', sub_format: str = 'srv3'
+) -> None:
+    if not url:
+        raise ValueError('Invalid url')
+
+    YTDL_OPTS['subtitleslangs'] = [sub_lang]
+    YTDL_OPTS['subtitlesformat'] = sub_format
+
+    with youtube_dl.YoutubeDL(YTDL_OPTS) as ydl:
+        ydl.download([url])
 
 
-ydl_opts = {}
+def main():
+    extract_subtitle(YT_URL)
 
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    yt_info = ydl.extract_info(
-        'https://www.youtube.com/watch?v=wBL3P1XcQrU',
-        download=False
-    )
-    save_to_json('ytl-info', yt_info)
+
+if __name__ == '__main__':
+    main()
