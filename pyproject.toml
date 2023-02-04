@@ -12,6 +12,7 @@ in-project = true
 [tool.poetry.dependencies]
 python = "^3.8"
 youtube-dl = "^2021.12.17"
+webvtt-py = "^0.4.6"
 
 
 [build-system]
